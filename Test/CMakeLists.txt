@@ -1,16 +1,19 @@
 #Test
+option(test "Build all tests." ON)
+project(Test)
 
 
+# include_directories(${IncludeDir})
+# add_executable(test1 test1.cpp ${IncludeFile} ${SrcFile})
+# target_include_directories(test1 PUBLIC ${IncludeDir})
 
 file(GLOB VectorTestSrc ./VectorTest/*.cpp)
-# message(${VectorTestSrc})
 
 find_package(Threads REQUIRED)
-# include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 foreach(TestFile ${VectorTestSrc})
   get_filename_component(TestFileName ${TestFile} NAME_WE)
-  add_executable(${TestFileName} ${TestFile} ${Source})
+  add_executable(${TestFileName} ${TestFile} ${SrcFile} ${IncludeFile})
   target_include_directories(${TestFileName}  PUBLIC ${IncludeDir})
   target_link_libraries(${TestFileName} gtest gtest_main  ${CMAKE_THREAD_LIBS_INIT} )
   add_test(${TestFileName} ${TestFileName})
